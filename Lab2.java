@@ -9,8 +9,6 @@ public class Lab2 {
 	 * @return
 	 */
 	
-	Scanner in = new Scanner(System.in);
-	String nString;
 	public static int binarySearch() {
 		Scanner in = new Scanner(System.in);
 		System.out.println("Enter in a random binary array having the"
@@ -31,20 +29,17 @@ public class Lab2 {
 		}
 		return -1;
 	}
-	
-	public static int squareRoot(int n) {
-		
-		return (int)Math.sqrt(n);
-	}
-	public static void main(String [] args) {
+	public static int squareRoot() {
 		Scanner in = new Scanner(System.in);
 		String nString;
 		System.out.print("Enter in an integer N: ");
 		nString = in.nextLine().trim();
 		int n = Integer.parseInt(nString);
-		int nRoot = squareRoot(n);
-		System.out.println( "Your number is : " + nRoot);
+		return (int)Math.sqrt(n);
+	}
+	public static void main(String [] args) {
 		
+		System.out.println( "Your number is : " + squareRoot());
 		int binaryIndex = binarySearch();
 		if( binaryIndex == -1) {
 			System.out.println("k is not found in binaryArray : " + binaryIndex);
