@@ -2,6 +2,11 @@ import java.util.Scanner;
 import java.util.Arrays;
 import java.util.Random;
 
+/**
+ * CECS 328 Lab 1
+ * @author Howrad Chen
+ *
+ */
 
 public class Lab1 {
 	
