@@ -28,25 +28,26 @@ public class Lab3 {
 			pivotIndex = start;
 		}
 		
-		System.out.println("Pivot: " + pivotValue + "Pivout Index: " + pivotIndex);
-		
-		
 		//swap pivot with last index.	
-		temp = array[array.length-1];
-		array[array.length-1] = array[pivotIndex];
-		array[pivotIndex] = array[end];
+		temp = array[end];
+		array[end] = array[pivotIndex];
+		array[pivotIndex] = temp;
+		
 
 		
 		for( int i = start; i < end; i++) {
-			if( array[i] >= pivotValue) {
-				k++;
-				
+			if( array[i] <= pivotValue) {
+				k++;// increments pointer
+				//swap the elements
+				temp = array[k];
+				array[k] = array[i];
+				array[i] = temp;
 			}
 		}
-//		
-//		temp = array[k+1];
-//		array[k+1] = array[end];
-//		array[end] = temp;
+		//
+		temp = array[k+1];
+		array[k+1] = array[end];
+		array[end] = temp;
 		
 		return k+1; //returns partition index.
 	}
@@ -100,46 +101,51 @@ public class Lab3 {
 	public static void main(String [] args) {
 		Scanner in = new Scanner(System.in);
 		String nString;
-		double start, stop, insertionTime = 0.00, quickSortTime = 0.00;
+		double start, stop, insertionTime = 0.00, quickSortTime = 0.00, insertionTotal= 0.00, quickSortTotal = 0.00;
 		int n, totalTimes = 100;
 		
 		
 		//tests arrays
-		int[] array = { -1, -2, 0 , 2, 3, 4, -2, 100};
-		System.out.print("Unsorted: [");
-		for (int i = 0; i < array.length; i++) {
-			System.out.print(array[i] + ", ");
-		}
-		System.out.print("]\n");
-		
-		int[] sortedArray = quick_sort(array);
-		System.out.print("Sorted: [");
-		for (int i = 0; i < sortedArray.length; i++) {
-			System.out.print(sortedArray[i] + ", ");
-		}
-		System.out.print("]");
-		
-		
-//		Random r = new Random(); 
-//		System.out.println("Please enter in a positive integer :");
-//		nString = in.nextLine().trim();
-//		n = Integer.parseInt(nString);
-//		int[] array = new int[n];
-//		start = System.nanoTime();
-//		int[] sortedArray = insertion_sort(array);
-//		stop = System.nanoTime();
-//		insertionTime = stop - start;
-//		System.out.println("Average Time to Sort Random array with Insertion Sort: " + insertionTime/totalTimes + " nanoseconds" );
+//		int[] array = { -1, -2, 0 , 2, 3, 4, -2, 100};
+//		System.out.print("Unsorted: [");
+//		for (int i = 0; i < array.length; i++) {
+//			System.out.print(array[i] + ", ");
+//		}
+//		System.out.print("]\n");
 //		
-//		start = System.nanoTime();
-//		sortedArray = quick_sort(array);
-//		stop = System.nanoTime();
-//		quickSortTime = stop - start;
-//		System.out.println("Average Time to Sort Random array with Quick Sort Time: " + quickSortTime/totalTimes + " nanoseconds" );
-//		
+//		int[] sortedArray = quick_sort(array);
+//		System.out.print("Sorted: [");
+//		for (int i = 0; i < sortedArray.length; i++) {
+//			System.out.print(sortedArray[i] + ", ");
+//		}
+//		System.out.print("]");
 		
 		
+		Random r = new Random(); 
+		System.out.println("Please enter in a positive integer :");
+		nString = in.nextLine().trim();
+		n = Integer.parseInt(nString);
+		int[] array = new int[n];
 		
+		for(int i = 0; i < 100; i++) {
+			for(int j = 0; j < array.length - 1; j ++) {
+				array[j] = r.nextInt(5000 + 1 + 5000) - 5000;	 // generate random numbers -1000 to 1000
+			}
+		start = System.nanoTime();
+		int[] sortedArray = insertion_sort(array);
+		stop = System.nanoTime();
+		insertionTime = stop - start;
+		insertionTotal += insertionTime;
+		
+		start = System.nanoTime();
+		sortedArray = quick_sort(array);
+		stop = System.nanoTime();
+		quickSortTime = stop - start;
+		quickSortTotal += quickSortTime;
+		}
+		
+		System.out.println("Average Time to Sort Random array with Insertion Sort: " + insertionTime/totalTimes + " nanoseconds" );
+		System.out.println("Average Time to Sort Random array with Quick Sort Time: " + quickSortTime/totalTimes + " nanoseconds" );
 		
 
 	}
