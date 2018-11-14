@@ -2,7 +2,6 @@ import java.util.Random;
 import java.util.Scanner;
 
 
-//https://www.geeksforgeeks.org/heap-sort/
 
 	public class Lab6HC {
 			
@@ -30,26 +29,30 @@ import java.util.Scanner;
 		
 		public static void build_MaxHeap(int[] array) {
 			int n = array.length;
+			//starting from parent of last leaf going up.
 			for( int i = n/2 -1 ; i >=  0; i--) {
 				max_Heapify(array, n, i);
+				// max heapify
 			}
 	
 		}
 		
 		public static void max_Heapify(int[] array, int n, int i) {
+			// indexing scheme
 			int max = i; 
-			int left = 2*i +1;
+			int left = 2*i +1; 
 			int right = 2*i + 2;
 			
+			//if left child is the max
 			if(left < n && array[left] > array[max]) {
 				max = left;
 			} 
 			
-			// If right child is larger than largest so far 
+			// when right child is the max 
 	        if (right < n && array[right] > array[max]) 
 	            max = right; 
 	  
-	        // If largest is not root 
+	        // If max is not root swap with max
 	        if (max != i) 
 	        { 
 	            int temp = array[i]; 
@@ -84,7 +87,6 @@ import java.util.Scanner;
 			Scanner in = new Scanner(System.in);
 			String nString;
 			double start, end, selectionSortTime = 0.00, heapSortTime = 0.00;
-			double rGenstart, rGenend, rGenDuration;
 			int n;
 			
 			
