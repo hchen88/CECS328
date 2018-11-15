@@ -43,7 +43,7 @@ public class Lab4HC {
 		for( int i = start; i < end; i++) {
 			if( array[i] <= pivotValue) {
 				k++;// increments pointer
-				//swap the elements
+				//swap the elements at k position with i.
 				temp = array[k];
 				array[k] = array[i];
 				array[i] = temp;
@@ -62,6 +62,30 @@ public class Lab4HC {
 		
 		
 		return 0;
+	}
+	
+	public static int[] quick_sort(int[] array) {
+		//calls sort to start sort.
+		sort(array, 0, array.length-1); 
+		return array;
+	}
+	
+	
+	/**
+	 * this method is used to sort each partition.
+	 * @param array - the array to sort
+	 * @param start - the start of the array
+	 * @param end - the end index of the array
+	 */
+	public static void sort(int[] array, int start, int end)  {
+		if (start < end)
+		{
+			int partitionIndex = partition(array, start, end);
+			//recursive call dividing array
+			sort(array, start, partitionIndex -1);
+			sort(array, partitionIndex+1, end);
+		}
+		
 	}
 
 	public static void main(String [] args) {

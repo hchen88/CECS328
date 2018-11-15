@@ -9,20 +9,20 @@ import java.util.Scanner;
 		public static void selection_sort(int array[]) 
 	    { 
 	        int n = array.length; 
-	  
-	        // One by one move boundary of unsorted subarray 
+	    
 	        for (int i = 0; i < n-1; i++) 
 	        { 
-	            // Find the minimum element in unsorted array 
-	            int min_idx = i; 
-	            for (int j = i+1; j < n; j++) 
-	                if (array[j] < array[min_idx]) 
-	                    min_idx = j; 
-	  
-	            // Swap the found minimum element with the first 
-	            // element 
-	            int temp = array[min_idx]; 
-	            array[min_idx] = array[i]; 
+	            int minIndex = i; 
+	            for (int j = i+1; j < n; j++) {
+	            	//checks if value of index j is less than current i index.
+	                if (array[j] < array[minIndex]) 
+	                    minIndex = j; 
+	            }
+	            
+	            //swaps the min with the ith element
+	            //way left element
+	            int temp = array[minIndex]; 
+	            array[minIndex] = array[i]; 
 	            array[i] = temp; 
 	        } 
 	    } 
@@ -39,18 +39,18 @@ import java.util.Scanner;
 		
 		public static void max_Heapify(int[] array, int n, int i) {
 			// indexing scheme
-			int max = i; 
-			int left = 2*i +1; 
-			int right = 2*i + 2;
+			int max = i; //parent index
+			int leftChild = 2*i +1;  
+			int rightChild = 2*i + 2;
 			
 			//if left child is the max
-			if(left < n && array[left] > array[max]) {
-				max = left;
+			if(leftChild < n && array[leftChild] > array[max]) {
+				max = leftChild;
 			} 
 			
 			// when right child is the max 
-	        if (right < n && array[right] > array[max]) 
-	            max = right; 
+	        if (rightChild < n && array[rightChild] > array[max]) 
+	            max = rightChild; 
 	  
 	        // If max is not root swap with max
 	        if (max != i) 
@@ -60,7 +60,7 @@ import java.util.Scanner;
 	            array[max] = temp; 
 	  
 	            // Recursively heapify the affected sub-tree 
-	            max_Heapify(array, n, max); 
+	            max_Heapify(array, n, max);  
 	        } 
 			
 		}
@@ -81,7 +81,6 @@ import java.util.Scanner;
 					
 		}
 		
-		
 		public static void main(String [] args) {
 			
 			Scanner in = new Scanner(System.in);
@@ -92,44 +91,43 @@ import java.util.Scanner;
 			
 			Random r = new Random(); 
 			System.out.print("Please enter in a positive integer : ");
-		nString = in.nextLine().trim();
-		n = Integer.parseInt(nString);
+			nString = in.nextLine().trim();
+			n = Integer.parseInt(nString);
 		
-		int[] array = new int[n];
-		System.out.println("--------Generating Random Array with "
+			int[] array = new int[n];
+			System.out.println("--------Generating Random Array with "
 				+ n +  " elements-----");
 
-		//start timer
-		//heapsort
-		start = System.nanoTime();
-		// repeat heap_sort 100 times to find average
-		for(int i = 0; i < 100; i ++) {
-			for(int j = 0; j < array.length - 1; j ++) {
-				array[i] = r.nextInt(1000 + 1 + 1000) - 1000;	  // generate random numbers -1000 to 1000
+			//start timer
+			//heapsort
+			start = System.nanoTime();
+			// repeat heap_sort 100 times to find average
+			for(int i = 0; i < 100; i ++) {
+				for(int j = 0; j < array.length - 1; j ++) {
+					array[i] = r.nextInt(1000 + 1 + 1000) - 1000;	  // generate random numbers -1000 to 1000
+				}
+				heap_sort(array);
 			}
-			heap_sort(array);
-		}
-		
-		end = System.nanoTime();
-		heapSortTime = end - start/100;
-		System.out.println("Average Running time for heap sort Time: " + heapSortTime + " nanoseconds");
-		
-		//start timer
-		//selection sort
-		start = System.nanoTime();
-		// repeat heap_sort 100 times to find average
-		for(int i = 0; i < 100; i ++) {
-			for(int j = 0; j < array.length - 1; j ++) {
-				array[i] = r.nextInt(1000 + 1 + 1000) - 1000;	  // generate random numbers -1000 to 1000
+			
+			end = System.nanoTime();
+			heapSortTime = end - start/100;
+			System.out.println("Average Running time for heap sort Time: " + heapSortTime + " nanoseconds");
+			
+			//start timer
+			//selection sort
+			start = System.nanoTime();
+			// repeat heap_sort 100 times to find average
+			for(int i = 0; i < 100; i ++) {
+				for(int j = 0; j < array.length - 1; j ++) {
+					array[i] = r.nextInt(1000 + 1 + 1000) - 1000;	  // generate random numbers -1000 to 1000
+				}
+	
+				selection_sort(array);
 			}
-
-			selection_sort(array);
-		}
-		
-		
-		end = System.nanoTime();
-		selectionSortTime = end - start/100;
-		System.out.println("Average Running time for selection sort Time: " + selectionSortTime + " nanoseconds");
+			
+			end = System.nanoTime();
+			selectionSortTime = end - start/100;
+			System.out.println("Average Running time for selection sort Time: " + selectionSortTime + " nanoseconds");
 		
 		
 		

@@ -8,6 +8,7 @@ public class Lab5HC {
 	public static int maxCrossSum(int[] array, int left, int mid, int right) {
 		int tempSum = 0;
 		int leftSum = Integer.MIN_VALUE;
+		
 		for (int i = mid; i >= 1; i --) {
 			tempSum += array[i];
 			if (tempSum > leftSum)
