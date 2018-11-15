@@ -13,7 +13,7 @@ public class Lab3HC {
 		//figure out pivot
 		int midpoint = (int) Math.ceil(array.length/2);
 		int pivotValue = 0, temp, pivotIndex = 0;
-		int k = start -1;
+		int x = start -1; // left pointer
 		
 		//median of the first, middle, and last to figure out pivot
 		if(array[end] >= array[midpoint] && array[start] <= array[midpoint]
@@ -38,22 +38,22 @@ public class Lab3HC {
 		array[end] = array[pivotIndex];
 		array[pivotIndex] = temp;
 		
-	
+		//iterates through "subarray"
 		for( int i = start; i < end; i++) {
 			if( array[i] <= pivotValue) {
-				k++;// increments pointer
-				//swap the elements
-				temp = array[k];
-				array[k] = array[i];
+				x++;// increments left pointer
+				//swaps element smaller than pivot with left pointer
+				temp = array[x];
+				array[x] = array[i];
 				array[i] = temp;
 			}
 		}
-		//swaps out of place arrays
-		temp = array[k+1];
-		array[k+1] = array[end];
+		//swaps pivot at last index with middle spot.
+		temp = array[x+1];
+		array[x+1] = array[end];
 		array[end] = temp;
 		
-		return k+1; //returns partition index.
+		return x+1; //returns partition index.
 	}
 	
 	/**
@@ -62,28 +62,17 @@ public class Lab3HC {
 	 * @param start - the start of the array
 	 * @param end - the end index of the array
 	 */
-	public static void sort(int[] array, int start, int end)  {
+	public static int[] quick_sort(int[] array, int start, int end)  {
 		if (start < end)
 		{
 			int partitionIndex = partition(array, start, end);
 			//recursive call dividing array
-			sort(array, start, partitionIndex -1);
-			sort(array, partitionIndex+1, end);
+			quick_sort(array, start, partitionIndex -1);
+			quick_sort(array, partitionIndex+1, end);
 		}
-		
-	}
-
-	/**
-	 * this method calls the sort method which uses recursive quick_sort.
-	 * @param array- the integer array to be sorted.
-	 * @return - returns the sorted array
-	 */
-	public static int[] quick_sort(int[] array) {
-		//calls sort to start sort.
-		sort(array, 0, array.length-1); 
 		return array;
 	}
-	
+
 		
 /**
  * this method takes an unsorted integer array of any size and sorts the array from least to greatest.
@@ -96,8 +85,8 @@ public class Lab3HC {
 			
 			int currentNum = array[i]; //current number Index to check.
 			int k = i-1; // previous index;
-			//loops until correct index is found for number. starting from 0
 			
+			//loops until correct index is found for number. starting from 0
 			while (k >=0 && currentNum < array[k]) { 
 				//swaps array if not in order
 				array[k+1] = array[k];
@@ -139,7 +128,7 @@ public class Lab3HC {
 		insertionTotal += insertionTime;
 		//times the quick sort algorithm
 		start = System.nanoTime();
-		sortedArray = quick_sort(array);
+		sortedArray = quick_sort(array, 0, array.length-1); 
 		stop = System.nanoTime();
 		quickSortTime = stop - start;
 		quickSortTotal += quickSortTime;
