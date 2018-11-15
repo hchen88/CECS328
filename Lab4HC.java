@@ -43,7 +43,7 @@ public class Lab4HC {
 		for( int i = start; i < end; i++) {
 			if( array[i] <= pivotValue) {
 				k++;// increments pointer
-				//swap the elements at k position with i.
+				//swap the elements
 				temp = array[k];
 				array[k] = array[i];
 				array[i] = temp;
@@ -56,62 +56,63 @@ public class Lab4HC {
 		
 		return k+1; //returns partition index.
 	}
-	public static int Quick_select(int[] array) {
-		int partitionIndx = 0;
-		partitionIndx = partition( array, 0, array.length -1);
+	public static int quick_select(int[] array, int start, int end, int k) {
+		Random rand = new Random();
+		//subarray is on last element returns since its the kth elemnt
 		
-		
-		return 0;
-	}
-	
-	public static int[] quick_sort(int[] array) {
-		//calls sort to start sort.
-		sort(array, 0, array.length-1); 
-		return array;
-	}
-	
-	
-	/**
-	 * this method is used to sort each partition.
-	 * @param array - the array to sort
-	 * @param start - the start of the array
-	 * @param end - the end index of the array
-	 */
-	public static void sort(int[] array, int start, int end)  {
-		if (start < end)
-		{
-			int partitionIndex = partition(array, start, end);
-			//recursive call dividing array
-			sort(array, start, partitionIndex -1);
-			sort(array, partitionIndex+1, end);
+		if(start == end) {
+			return array[start];
 		}
+		//chooses a random index from start to end.
+		int pivotIndex = start + rand.nextInt();
+		
+		//partitions array
+		pivotIndex = partition(array, start, end);
+		
+		//if the pivot index is the kth index
+		if (k == pivotIndex)
+			return array[k];
+		//k is less than pivotIndex, recursive call to quick sort. updating end term
+		else if (k < pivotIndex)
+			return quick_select(array, start, pivotIndex -1, k);
+		// if k  is more than the pivotIndex , another recursive call updating start
+		else
+			return quick_select(array, pivotIndex + 1 , end, k);
 		
 	}
-
+	
+	
+	//Part B
+	public static int quick_selectB(int[] array, int start, int end, int k) {
+		Random rand = new Random();
+		k = array.length - k;
+		//subarray is on last element returns since its the kth elemnt
+		if(start == end) {
+			return array[start];
+		}
+		//chooses a random index from start to end.
+		int pivotIndex = start + rand.nextInt();
+		
+		//partitions array
+		pivotIndex = partition(array, start, end);
+		
+		//if the pivot index is the kth index
+		if (k == pivotIndex)
+			return array[k];
+		//k is less than pivotIndex, recursive call to quick sort. updating end term
+		else if (k < pivotIndex)
+			return quick_select(array, start, pivotIndex -1, k);
+		// if k  is more than the pivotIndex , another recursive call updating start
+		else
+			return quick_select(array, pivotIndex + 1 , end, k);
+		
+	}
 	public static void main(String [] args) {
 		Scanner in = new Scanner(System.in);
 		String nString;
-		double start, stop, insertionTime = 0.00, quickSortTime = 0.00, insertionTotal= 0.00, quickSortTotal = 0.00;
-		int n, k = -1, totalTimes = 100;
-		int[] sortedArray;
+		int n, k = -1;
 		
-		
-		//tests arrays
-//		int[] array = { -1, -2, 0 , 2, 3, 4, -2, 100};
-//		System.out.print("Unsorted: [");
-//		for (int i = 0; i < array.length; i++) {
-//			System.out.print(array[i] + ", ");
-//		}
-//		System.out.print("]\n");
-//		
-//		int[] sortedArray = quick_sort(array);
-//		System.out.print("Sorted: [");
-//		for (int i = 0; i < sortedArray.length; i++) {
-//			System.out.print(sortedArray[i] + ", ");
-//		}
-//		System.out.print("]");
-		
-		
+		//Part A		
 		Random r = new Random(); 
 		System.out.print("Please enter in a positive integer : ");
 		nString = in.nextLine().trim();
@@ -126,7 +127,7 @@ public class Lab4HC {
 		}
 		
 		for(int i = 0; i < array.length; i++) {
-			if ( i < array.length -2) {
+			if ( i < array.length -1) {
 				System.out.print(array[i] + ", ");
 			}else {
 				System.out.print(array[i]);
@@ -139,11 +140,13 @@ public class Lab4HC {
 			k = Integer.parseInt(nString);
 		}
 		
-//		System.out.println("The kth leas element is " + 
-//				array[Quick_select(array)]);
-
+		System.out.println("The kth least element is " + 
+				quick_select(array, 0 , n-1, k));
 		
-		//function call to find and print kth least elemnet
+		//Part B
+		System.out.println("The kth largest element is " + 
+				quick_selectB(array, 0 , n-1, k));
+
 		
 	}
 		
