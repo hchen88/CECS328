@@ -43,7 +43,7 @@ public class Lab4HC {
 		for( int i = start; i < end; i++) {
 			if( array[i] <= pivotValue) {
 				k++;// increments pointer
-				//swap the elements
+				//swap the elements at k position with i.
 				temp = array[k];
 				array[k] = array[i];
 				array[i] = temp;
@@ -56,63 +56,37 @@ public class Lab4HC {
 		
 		return k+1; //returns partition index.
 	}
-	public static int quick_select(int[] array, int start, int end, int k) {
-		Random rand = new Random();
-		//subarray is on last element returns since its the kth elemnt
-		
-		if(start == end) {
-			return array[start];
-		}
-		//chooses a random index from start to end.
-		int pivotIndex = start + rand.nextInt();
-		
-		//partitions array
-		pivotIndex = partition(array, start, end);
-		
-		//if the pivot index is the kth index
-		if (k == pivotIndex)
-			return array[k];
-		//k is less than pivotIndex, recursive call to quick sort. updating end term
-		else if (k < pivotIndex)
-			return quick_select(array, start, pivotIndex -1, k);
-		// if k  is more than the pivotIndex , another recursive call updating start
-		else
-			return quick_select(array, pivotIndex + 1 , end, k);
-		
-	}
 	
 	
-	//Part B
-	public static int quick_selectB(int[] array, int start, int end, int k) {
-		Random rand = new Random();
-		k = array.length - k;
-		//subarray is on last element returns since its the kth elemnt
-		if(start == end) {
-			return array[start];
+	/**
+	 * this method is used to sort each partition.
+	 * @param array - the array to sort
+	 * @param start - the start of the array
+	 * @param end - the end index of the array
+	 */
+	public static int quick_select(int[] array, int start, int end, int k)  {
+		if( k> 0 && k <= end - 1 + 1) {
+			int i = partition(array, start, end);
+			
+			if ( i - 1 == k -1) 
+				return array[i];
+			
+			if( k - 1< i - start) {
+				return quick_select(array, start, i -1, k );
+			}
+			
+			return quick_select(array, i + 1, end, k- i +1-1);	
 		}
-		//chooses a random index from start to end.
-		int pivotIndex = start + rand.nextInt();
-		
-		//partitions array
-		pivotIndex = partition(array, start, end);
-		
-		//if the pivot index is the kth index
-		if (k == pivotIndex)
-			return array[k];
-		//k is less than pivotIndex, recursive call to quick sort. updating end term
-		else if (k < pivotIndex)
-			return quick_select(array, start, pivotIndex -1, k);
-		// if k  is more than the pivotIndex , another recursive call updating start
-		else
-			return quick_select(array, pivotIndex + 1 , end, k);
+		 return 0;
 		
 	}
+
 	public static void main(String [] args) {
 		Scanner in = new Scanner(System.in);
 		String nString;
 		int n, k = -1;
+	
 		
-		//Part A		
 		Random r = new Random(); 
 		System.out.print("Please enter in a positive integer : ");
 		nString = in.nextLine().trim();
@@ -127,7 +101,7 @@ public class Lab4HC {
 		}
 		
 		for(int i = 0; i < array.length; i++) {
-			if ( i < array.length -1) {
+			if ( i < array.length -2) {
 				System.out.print(array[i] + ", ");
 			}else {
 				System.out.print(array[i]);
@@ -141,12 +115,10 @@ public class Lab4HC {
 		}
 		
 		System.out.println("The kth least element is " + 
-				quick_select(array, 0 , n-1, k));
-		
-		//Part B
-		System.out.println("The kth largest element is " + 
-				quick_selectB(array, 0 , n-1, k));
+				quick_select(array, 0, n-1, k));
 
+		
+		//function call to find and print kth least elemnet
 		
 	}
 		
