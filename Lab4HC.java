@@ -118,8 +118,6 @@ public class Lab4HC {
 				quick_select(array, 0, n-1, k));
 
 		
-		//function call to find and print kth least elemnet
-		
 	}
 		
 		
