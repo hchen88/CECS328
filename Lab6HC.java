@@ -5,10 +5,9 @@ import java.util.Scanner;
 
 	public class Lab6HC {
 			
-		
 		public static void selection_sort(int array[]) 
 	    { 
-	        int n = array.length; 
+	        int n = array.length;  
 	    
 	        for (int i = 0; i < n-1; i++) 
 	        { 
@@ -38,7 +37,7 @@ import java.util.Scanner;
 		}
 		
 		public static void max_Heapify(int[] array, int n, int i) {
-			// indexing scheme
+			// indexing scheme 
 			int max = i; //parent index
 			int leftChild = 2*i +1;  
 			int rightChild = 2*i + 2;
@@ -55,6 +54,7 @@ import java.util.Scanner;
 	        // If max is not root swap with max
 	        if (max != i) 
 	        { 
+	        	//swap the max with i.
 	            int temp = array[i]; 
 	            array[i] = array[max]; 
 	            array[max] = temp; 
@@ -67,10 +67,11 @@ import java.util.Scanner;
 		
 		public static void heap_sort(int[] array) {
 			int n = array.length;
-			
-
 			build_MaxHeap(array);
+			
+			//start from last node all the way to top
 			for (int i = n-1; i >= 0; i--) {
+				// swap index 0 with i
 				int temp = array[0];
 				array[0] = array[i];
 				array[i] = temp;
@@ -87,7 +88,15 @@ import java.util.Scanner;
 			String nString;
 			double start, end, selectionSortTime = 0.00, heapSortTime = 0.00;
 			int n;
+			int [] array2 = {11, 2, 3, 4, 50, -2};
 			
+			heap_sort(array2);
+			
+			for(int i = 0; i < array2.length; i++) {
+				System.out.print(array2[i] + " ");
+			}
+			
+			System.out.println();
 			
 			Random r = new Random(); 
 			System.out.print("Please enter in a positive integer : ");
@@ -102,6 +111,7 @@ import java.util.Scanner;
 			//heapsort
 			start = System.nanoTime();
 			// repeat heap_sort 100 times to find average
+			
 			for(int i = 0; i < 100; i ++) {
 				for(int j = 0; j < array.length - 1; j ++) {
 					array[i] = r.nextInt(1000 + 1 + 1000) - 1000;	  // generate random numbers -1000 to 1000
@@ -128,8 +138,6 @@ import java.util.Scanner;
 			end = System.nanoTime();
 			selectionSortTime = end - start/100;
 			System.out.println("Average Running time for selection sort Time: " + selectionSortTime + " nanoseconds");
-		
-		
 		
 		
 	}
