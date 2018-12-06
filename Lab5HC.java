@@ -5,11 +5,13 @@ public class Lab5HC {
 	
 	
 	
-	public static int maxCrossSum(int[] array, int left, int mid, int right) {
+	public static int maxCrossSum(int[] array, int low, int mid, int high) {
+		
 		int tempSum = 0;
 		int leftSum = Integer.MIN_VALUE;
 		
-		for (int i = mid; i >= 1; i --) {
+		// starts from mid to low
+		for (int i = mid; i >= low; i --) {
 			tempSum += array[i];
 			if (tempSum > leftSum)
 				leftSum = tempSum;
@@ -17,8 +19,9 @@ public class Lab5HC {
 		
         // Include elements on right of mid 
         tempSum = 0; 
-        int rightSum = Integer.MIN_VALUE; 
-        for (int i = mid + 1; i <= right; i++) 
+        int rightSum =Integer.MIN_VALUE;
+        // starts from mid +1 to high
+        for (int i = mid + 1; i <= high; i++) 
         { 
             tempSum +=  array[i]; 
             if (tempSum > rightSum) 
@@ -32,22 +35,47 @@ public class Lab5HC {
 	/**
 	 * the maxmium sub
 	 * @param array
-	 * @return
+	 * @return - integer value of sum
 	 */
-    public static int maxSubSum(int[] array, int left, int right) 
-    { 	 //page 72 in textbook
+    public static int maxSubSum(int[] array, int low, int high) 
+    { 	
     	//Base Case: Only one element
-    	if (left == right){
-    		return array[right];
+    	if (low == high){
+    		// returns just one element
+    		// because since that would be the max sum.
+    		return array[high]; 
+    	}else {
+    	
+    	int mid = (low + high) / 2;
+    	
+    	int leftSum = maxSubSum(array, low, mid);
+    	int rightSum = maxSubSum(array, mid + 1, high);
+    	int crossSum = maxCrossSum(array, low, mid, high);
+    	
+    	// left sum is greatest
+        if(leftSum >= rightSum && leftSum >= crossSum) 
+        	{
+        	return leftSum;
+        	}
+        //right sum is the greatest
+        else if (rightSum >= leftSum && rightSum >= crossSum) 
+        	{
+        	return rightSum;
+        	}
+        
+        //the sum in between is the greatest
+        else 
+        	{	
+        	return crossSum;
+        	}
     	}
-    	
-    	int midpoint = (left + right) / 2;
-    	
-    	return Math.max(Math.max(maxSubSum(array, left, midpoint), 
-    			maxSubSum(array, midpoint+1, right)), 
-                maxCrossSum(array, left, midpoint, right));
     } 
     
+    /**
+     * finds the max subarray in T(N) = n.
+     * @param array - array to find max sum
+     * @return - int value of sum
+     */
     public static int mssN(int[] array) 
     { 
         int size = array.length; 
@@ -79,8 +107,10 @@ public class Lab5HC {
 		n = Integer.parseInt(nString);
 		
 		int[] array = new int[n];
+		
 		System.out.println("--------Generating Random Array with "
 				+ n +  " elements-----");
+		
 		for(int i = 0; i < array.length; i++) {
 			array[i] = r.nextInt(100 + 1 + 100) - 100;// generate random numbers -1000 to 1000
 			System.out.print(array[i] + " ");
@@ -88,12 +118,10 @@ public class Lab5HC {
 		
 		System.out.println("\nOutput Sum of MSS with "
 				+ "O(n) MSS function: " +  mssN(array));
+		
 		System.out.println("Output Sum of MSS with "
 				+ "O(nlogn) MSS function: " 
 				+  maxSubSum(array, 0, array.length - 1));
-		
-		
-		
 	}
 
 }
